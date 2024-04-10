@@ -42,11 +42,11 @@ let simpleScorer=
 function simpleScore(word){
    let scores= {1: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']};
    word= word.toUpperCase();
-   let letterPoints= "";
+   let letterPoints= 0;
    for(let i=0; i<word.length; i++){
       for( const pointValue in scores){
          if (scores[pointValue].includes(word[i])){
-            letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+            letterPoints += Number(pointValue);
          }
       }
    }
@@ -59,11 +59,11 @@ function vowelBonus(word){
    let scores= {1: ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'],
                          3: ['A', 'E', 'I', 'O', 'U']};
    word= word.toUpperCase();
-   let letterPoints= "";
+   let letterPoints= 0;
    for(let i=0; i < word.length; i++){
    for(const pointValue in scores){
       if(scores[pointValue].includes(word[i])){
-         letterPoints += `Points for '${word[i]}': ${pointValue}\n`;
+         letterPoints += Number(pointValue);
       }  
    } 
    }
@@ -89,19 +89,37 @@ const scoringAlgorithms = [
    {
       name: "Scrabble",
       description: "The traditional scoring algorithm.",
-      ScorerFunction: oldScrabbleScorer},
+      scorerFunction: oldScrabbleScorer},
    ];
-   console.log(scoringAlgorithms[0].name);
-
-function scorerPrompt() {
-   let numAlgorithms = scoringAlgorithms.length;
-   let algorithmTypes ="";
-   for (let i=0; i < numAlgorithms; i++) {
-      algorithmTypes += `\n${i} - ${scoringAlgorithms[i].name}`;
+   
+   
+   function scorerPrompt() {
+      let numAlgorithms = scoringAlgorithms.length;
+      let algorithmTypes ="";
+      
+      for (let i=0; i < numAlgorithms; i++) {
+         algorithmTypes += `\n${i} - ${scoringAlgorithms[i].name}`;
    }
-   console.log("\nChoose a scoring algorithm for your game. Enter the number for the corresponding Scorer:");
-console.log(algorithmTypes);
-let scorerIndex = input.question("\nYour algorithm choice is: ");
+
+      console.log("\nChoose a scoring algorithm for your game. Enter the number for the corresponding Scorer:");
+      console.log(algorithmTypes);
+
+      let scorerIndex = input.question("\nYour algorithm choice is: ");
+
+console.log("Chosen algorithm name: ", scoringAlgorithms[scorerIndex].name);
+// let score=0;
+// let chosenAlgorithm = scoringAlgorithms[scorerIndex].scorerFunction;
+
+// if (chosenAlgorithm === simpleScorer || chosenAlgorithm === vowelBonusScorer || chosenAlgorithm === oldScrabbleScorer){
+// for(let i = 0; i < word.length; i++){
+   //    let letter = word[i];
+   //    for(letter in word){
+      //       score += chosenAlgorithm[letter];
+      //    }
+      // }
+
+// }
+// console.log("The total score for your word is: ", score);
 return scorerIndex;
 }
 
@@ -111,10 +129,15 @@ function transform() {};
 
 
 function runProgram() {
-   initialPrompt();
-   scorerPrompt(scoringAlgorithms);
+
+   let word = initialPrompt();
+
+   scorerPrompt();
    
-}
+    console.log("The total score for your word is: ", scoringAlgorithms[1].scorerFunction("apple"));
+
+}  
+
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
