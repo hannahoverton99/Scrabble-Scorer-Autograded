@@ -94,59 +94,52 @@ const scoringAlgorithms = [
    
    
    function scorerPrompt() {
+      let word = initialPrompt();
       let numAlgorithms = scoringAlgorithms.length;
       let algorithmTypes ="";
       
       for (let i=0; i < numAlgorithms; i++) {
-         algorithmTypes += `\n${i} - ${scoringAlgorithms[i].name}`;
+         algorithmTypes += `\n${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}`;
    }
 
-      console.log("\nChoose a scoring algorithm for your game. Enter the number for the corresponding Scorer:");
-      console.log(algorithmTypes);
+   console.log("\nChoose a scoring algorithm for your game. Enter the number for the corresponding Scorer:");
+   console.log(algorithmTypes);
+   let scorerIndex = input.question("\nYour algorithm choice is: ");
 
-      let scorerIndex = input.question("\nYour algorithm choice is: ");
 
 console.log("Chosen algorithm name: ", scoringAlgorithms[scorerIndex].name);
-// let score=0;
-// let chosenAlgorithm = scoringAlgorithms[scorerIndex].scorerFunction;
 
-// if (chosenAlgorithm === simpleScorer || chosenAlgorithm === vowelBonusScorer || chosenAlgorithm === oldScrabbleScorer){
-// for(let i = 0; i < word.length; i++){
-   //    let letter = word[i];
-   //    for(letter in word){
-      //       score += chosenAlgorithm[letter];
-      //    }
-      // }
-
-// }
-// console.log("The total score for your word is: ", score);
-return scorerIndex;
-}
+ let chosenAlgorithm = scoringAlgorithms[scorerIndex];
 
 
-
-function transform() {};
-
-
-function runProgram() {
-
-   let word = initialPrompt();
-
-   scorerPrompt();
+      console.log("The total score for your word is: ", chosenAlgorithm.scorerFunction(word));
+      return chosenAlgorithm;
+      
+   }
    
-    console.log("The total score for your word is: ", scoringAlgorithms[1].scorerFunction("apple"));
-
-}  
-
-
-// Don't write any code below this line //
-// And don't change these or your program will not run as expected //
-module.exports = {
-   initialPrompt: initialPrompt,
-   transform: transform,
-   oldPointStructure: oldPointStructure,
-   simpleScorer: simpleScorer,
-   vowelBonusScorer: vowelBonusScorer,
+   
+   
+   function transform() {};
+   
+   
+   function runProgram() {
+      
+      
+      
+      scorerPrompt();
+      
+      
+   }  
+   
+   
+   // Don't write any code below this line //
+   // And don't change these or your program will not run as expected //
+   module.exports = {
+      initialPrompt: initialPrompt,
+      transform: transform,
+      oldPointStructure: oldPointStructure,
+      simpleScorer: simpleScorer,
+      vowelBonusScorer: vowelBonusScorer,
    scrabbleScorer: scrabbleScorer,
    scoringAlgorithms: scoringAlgorithms,
    newPointStructure: newPointStructure,
